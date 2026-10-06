@@ -2,20 +2,24 @@
 
 **2× temporal upscaling for real-life videos — made by [xyether](https://github.com/XYETHER) 🤍**
 
-Tmosr2 looks at nearby video frames and reuses its previous upscaled results. Its non-temporal backbone is **[MoSRv2 by umzi2](https://github.com/umzi2/MoSRV2)**, with temporal fusion and recurrent feedback added by xyether.
+Tmosr2 is a 2× model for IRL videos. It uses nearby frames and feedback from previous results to upscale each frame.
+
+Built on **[MoSRv2 by umzi2](https://github.com/umzi2/MoSRV2)**, with temporal fusion and recurrent feedback added by xyether.
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/XYETHER/Tmosr2/blob/main/Tmosr2.ipynb)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-> 🧪 **Still in development:** results aren't perfect. You may see artifacts, softer details or flicker, and quality can vary from one clip to another. Try it on your own footage and check the result.
+> 🧪 Still being developed. Results aren't perfect and will vary depending on the video.
 
 ## 👀 See it in action
 
-The example below uses the supplied real-life clip. The input is **1280×720** and the model output is **2560×1440**. No frame interpolation, sharpening filter or other enhancement was added.
+**720p → 1440p**
 
 ![Input and Tmosr2 output](examples/comparison.png)
 
-**A closer look:** the input crop is enlarged with bilinear resizing for comparison; the other crop comes directly from Tmosr2's output.
+### A closer look
+
+The input on the left is resized to match the output's size.
 
 ![Detail comparison](examples/detail.png)
 
@@ -23,14 +27,16 @@ The example below uses the supplied real-life clip. The input is **1280×720** a
 | :---: | :---: |
 | [▶️ Watch / download input](https://github.com/XYETHER/Tmosr2/releases/download/v1.0.0/input_preview.mp4) | [▶️ Watch / download 2× output](https://github.com/XYETHER/Tmosr2/releases/download/v1.0.0/Tmosr2_preview.mp4) |
 
-Both videos keep all **52 source frames** and their original timing, including the final hold. The images are examples of this checkpoint, not a quality benchmark.
+## 🏋️ Training
+
+I trained Tmosr2 using **[traiNNer-redux](https://github.com/the-database/traiNNer-redux)** and **[4K-VFHQ-Tiny](https://huggingface.co/datasets/XYETHER/4K-VFHQ-Tiny)**, a dataset I created.
 
 ## 🚀 Try it in Colab
 
 1. Open the **[Colab notebook](https://colab.research.google.com/github/XYETHER/Tmosr2/blob/main/Tmosr2.ipynb)**.
 2. Select **Runtime → Change runtime type → T4 GPU**.
 3. Run **✨ Setup Environment**, then **🚀 Upscale**.
-4. Upload a video and download your result. That's it! 🎉
+4. Upload your video and download the result.
 
 ### 🎛️ What do the settings mean?
 
@@ -52,14 +58,12 @@ Get the **[weights, ONNX models and T4 engines from the release](https://github.
 | File | For |
 | --- | --- |
 | `Tmosr2_2x.safetensors` | Original EMA checkpoint for the PyTorch architecture. |
-| `Tmosr2_2x_recurrent.onnx` | The supplied seven-input recurrent model. |
+| `Tmosr2_2x_recurrent.onnx` | Seven-input recurrent model. |
 | `Tmosr2_2x_seed.onnx` | Spatial bootstrap used to initialize recurrent memory. |
 | `Tmosr2_2x_*_T4.engine` | Prebuilt FP16 engines for T4 + TensorRT 11.0.0.114. |
 | `SHA256SUMS.txt` | Checksums for the release files. |
 
-✅ The released notebook was tested on the supplied T4 runtime from an empty model cache, using these public downloads. A setup rerun reused the cache, and the default settings processed all 52 preview frames with their original timing.
-
-The Colab notebook downloads verified engines automatically. It doesn't build engines or run ONNX conversion during setup. The PyTorch source is available for other hardware.
+The Colab notebook downloads what it needs automatically and was tested on a T4. For other hardware, use the PyTorch version below.
 
 <details>
 <summary><strong>🔬 How the temporal architecture works</strong></summary>
@@ -99,7 +103,7 @@ flowchart LR
 
 The release engines have landscape and portrait profiles: minimum 32 pixels per LR dimension, maximum long side 1920 and short side 1080. Odd dimensions are reflect-padded during inference and cropped back at 2×.
 
-The released checkpoint is the supplied **phase-4 EMA, iteration 3829**, publicly named **Tmosr2**. It was trained on VFHQ-derived, DPID-downsampled 2× pairs. There is no validated temporal-quality benchmark or claim of superior temporal consistency in this release.
+Checkpoint: **phase-4 EMA, iteration 3829**.
 
 </details>
 
@@ -130,15 +134,15 @@ python tools/build_t4_engines.py --model-dir models
 python tmosr2_video.py input.mp4 output.mp4 --backend trt
 ```
 
-See [validation.json](validation.json) for the tested runtime, checkpoint/ONNX comparison, recurrent FP16 comparison and full-video checks. This records the tested environment; it does not guarantee every future Colab runtime or input will behave identically.
+Test results and runtime details are in [validation.json](validation.json).
 
 </details>
 
 ## 🤍 Credits & license
 
-- **[xyether](https://github.com/XYETHER)** — temporal architecture additions, model weights, notebook and release.
+- **[xyether](https://github.com/XYETHER)** — temporal architecture, model training, [4K-VFHQ-Tiny dataset](https://huggingface.co/datasets/XYETHER/4K-VFHQ-Tiny), notebook and release.
 - **[umzi2](https://github.com/umzi2)** — the base **[MoSRv2 non-temporal architecture](https://github.com/umzi2/MoSRV2)**, licensed under MIT.
-- **[traiNNer-redux](https://github.com/the-database/traiNNer-redux)** — training framework and backbone compatibility code; its Apache-2.0 notice is retained.
+- **[traiNNer-redux](https://github.com/the-database/traiNNer-redux)** — the framework used to train Tmosr2.
 - The notebook layout is adapted from **[Xyether Anime Upscaler](https://github.com/XYETHER/Xyether-Anime-Upscaler)**.
 
 Tmosr2's temporal code, weights and notebook are released under **[MIT](LICENSE)**. Upstream notices are preserved in [NOTICE](NOTICE) and [licenses/](licenses/). Example footage is separate from the code/model license.
