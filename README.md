@@ -57,6 +57,8 @@ Get the **[weights, ONNX models and T4 engines from the release](https://github.
 | `Tmosr2_2x_*_T4.engine` | Prebuilt FP16 engines for T4 + TensorRT 11.0.0.114. |
 | `SHA256SUMS.txt` | Checksums for the release files. |
 
+✅ The released notebook was tested on the supplied T4 runtime from an empty model cache, using these public downloads. A setup rerun reused the cache, and the default settings processed all 52 preview frames with their original timing.
+
 The Colab notebook downloads verified engines automatically. It doesn't build engines or run ONNX conversion during setup. The PyTorch source is available for other hardware.
 
 <details>

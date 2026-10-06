@@ -169,5 +169,48 @@
     "Simple cut detector; may miss cuts or reset on fast motion.",
     "8-bit SDR video path; no HDR color-managed processing.",
     "Small frame dimensions may fall below NVENC hardware encoder limits; use the portable software encoder in that case."
-  ]
+  ],
+  "public_colab_notebook_test": {
+    "exact_notebook_cells": "pass",
+    "public_release_downloads": [
+      "https://github.com/XYETHER/Tmosr2/releases/download/v1.0.0/Tmosr2_2x_seed_T4.engine",
+      "https://github.com/XYETHER/Tmosr2/releases/download/v1.0.0/Tmosr2_2x_recurrent_T4.engine",
+      "https://github.com/XYETHER/Tmosr2/releases/download/v1.0.0/tmosr2_video.py"
+    ],
+    "checksum_verification": "pass",
+    "repeat_setup_cached": "pass",
+    "settings": {
+      "video_path": "input.mp4",
+      "Speed_Boost": true,
+      "Force_1080p": false,
+      "codec": "hevc_nvenc",
+      "crf_value": 15,
+      "auto_download": false
+    },
+    "video": {
+      "input_frames": 52,
+      "output_frames": 52,
+      "input_size": [
+        1280,
+        720
+      ],
+      "model_input_size": [
+        1280,
+        720
+      ],
+      "output_size": [
+        2560,
+        1440
+      ],
+      "duration_seconds": 2.12,
+      "max_timestamp_error_seconds": 0.0,
+      "scene_resets": 1,
+      "codec": "hevc_nvenc",
+      "seconds": 38.338,
+      "backend": "trt"
+    },
+    "total_seconds": 48.777,
+    "interactive_upload_download": "google.colab API present; browser dialogs not exercised in the automated run"
+  },
+  "onnx_export_tool": "Executed public tools/export_onnx.py; both generated graphs passed onnx.checker."
 }
