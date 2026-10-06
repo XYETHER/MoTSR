@@ -1,0 +1,17 @@
+Tmosr2
+Temporal architecture extensions, model weights and release by xyether (2026).
+Licensed under MIT; see LICENSE.
+
+MoSRv2 spatial (non-temporal) architecture by umzi2:
+https://github.com/umzi2/MoSRV2
+Copyright (c) 2025 umzi. MIT; see licenses/MoSRv2-MIT.txt.
+
+The supplied architecture was developed in a traiNNer-redux checkout.
+Retained backbone compatibility methods originate from that checkout.
+https://github.com/the-database/traiNNer-redux
+Apache-2.0 notice retained in licenses/trainner-redux-Apache-2.0.txt.
+Changes in this release: temporal fusion, two recurrent SR feedback paths,
+standalone dependency reduction, renamed public API, and video inference tools.
+
+Preview footage is user-supplied and is not covered by the code/model MIT license.
+TensorRT, CUDA, PyTorch and FFmpeg retain their respective licenses.

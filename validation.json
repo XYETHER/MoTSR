@@ -1,0 +1,173 @@
+{
+  "tested_on": "2026-10-06",
+  "gpu": "Tesla T4, 15 GiB",
+  "runtime": {
+    "torch": "2.11.0+cu130",
+    "tensorrt": "11.0.0.114",
+    "ffmpeg": "6.1.1",
+    "python": "3.13"
+  },
+  "original_checkpoint_strict_load": "pass",
+  "supplied_onnx_vs_standalone_pytorch_max_abs": 1.1324882507324219e-06,
+  "fp16_recurrent_test": {
+    "description": "7 recurrent steps on seeded random RGB 64x96 inputs, with separate FP32/FP16 feedback chains; numeric parity, not a quality benchmark",
+    "frames": [
+      {
+        "frame": 0,
+        "max_abs": 0.001364588737487793,
+        "mean_abs": 0.00022862345213070512
+      },
+      {
+        "frame": 1,
+        "max_abs": 0.0015946626663208008,
+        "mean_abs": 0.00022924070071894675
+      },
+      {
+        "frame": 2,
+        "max_abs": 0.0017261505126953125,
+        "mean_abs": 0.00023175434034783393
+      },
+      {
+        "frame": 3,
+        "max_abs": 0.0016786456108093262,
+        "mean_abs": 0.00023354859149549156
+      },
+      {
+        "frame": 4,
+        "max_abs": 0.001468062400817871,
+        "mean_abs": 0.00023163185687735677
+      },
+      {
+        "frame": 5,
+        "max_abs": 0.001591324806213379,
+        "mean_abs": 0.00022640950919594616
+      },
+      {
+        "frame": 6,
+        "max_abs": 0.0014920234680175781,
+        "mean_abs": 0.00023050096933729947
+      }
+    ]
+  },
+  "video_tests": {
+    "full_user_clip_h264": {
+      "input_frames": 52,
+      "output_frames": 52,
+      "input_size": [
+        1280,
+        720
+      ],
+      "model_input_size": [
+        1280,
+        720
+      ],
+      "output_size": [
+        2560,
+        1440
+      ],
+      "duration_seconds": 2.12,
+      "max_timestamp_error_seconds": 0.0,
+      "scene_resets": 1,
+      "codec": "h264_nvenc",
+      "seconds": 39.9,
+      "backend": "trt"
+    },
+    "full_user_clip_hevc_force1080p": {
+      "input_frames": 52,
+      "output_frames": 52,
+      "input_size": [
+        1280,
+        720
+      ],
+      "model_input_size": [
+        1280,
+        720
+      ],
+      "output_size": [
+        1920,
+        1080
+      ],
+      "duration_seconds": 2.12,
+      "max_timestamp_error_seconds": 0.0,
+      "scene_resets": 1,
+      "codec": "hevc_nvenc",
+      "seconds": 31.705,
+      "backend": "trt"
+    },
+    "portrait_odd_scene_cut_audio_trt": {
+      "input_frames": 6,
+      "output_frames": 6,
+      "input_size": [
+        129,
+        195
+      ],
+      "model_input_size": [
+        129,
+        195
+      ],
+      "output_size": [
+        258,
+        390
+      ],
+      "duration_seconds": 0.24000000000000002,
+      "max_timestamp_error_seconds": 0.0,
+      "scene_resets": 2,
+      "codec": "h264_nvenc",
+      "seconds": 4.548,
+      "backend": "trt"
+    },
+    "pytorch_software_encoding": {
+      "input_frames": 6,
+      "output_frames": 6,
+      "input_size": [
+        129,
+        195
+      ],
+      "model_input_size": [
+        129,
+        195
+      ],
+      "output_size": [
+        258,
+        390
+      ],
+      "duration_seconds": 0.24000000000000002,
+      "max_timestamp_error_seconds": 0.0,
+      "scene_resets": 2,
+      "codec": "libx264",
+      "seconds": 1.322,
+      "backend": "torch"
+    },
+    "audio_codec": "aac"
+  },
+  "assets": {
+    "Tmosr2_2x.safetensors": {
+      "size": 16871999,
+      "sha256": "1d838c7f8111560aa34e8582075cd5f82840e7bd4e7a9bddf7a1bcf3f2b7d4fd"
+    },
+    "Tmosr2_2x_seed.onnx": {
+      "size": 16885477,
+      "sha256": "26ecfa9bf05477b0f2e4629ad9670f1554d272ad18ff41d3a5eefdcb24aa64eb"
+    },
+    "Tmosr2_2x_recurrent.onnx": {
+      "size": 17006297,
+      "sha256": "343f8de449d23a4de6eb1e72cfdc84ac6cc29ef28debfcc9f2a68177856c107d"
+    },
+    "Tmosr2_2x_seed_T4.engine": {
+      "size": 19459660,
+      "sha256": "e8af6ee5c9f7b2cce8dbee71efdb3fc5d4700cb6129cae83b5897a938e788e84"
+    },
+    "Tmosr2_2x_recurrent_T4.engine": {
+      "size": 21190684,
+      "sha256": "43b13065ec01a94e2397f255e44bb46e78002429bd9d12d81393a124555df74b"
+    }
+  },
+  "limitations": [
+    "Tested in the supplied T4 runtime; future Colab/runtime changes are not guaranteed.",
+    "Only the supplied short user clip and a small synthetic branch test were used.",
+    "No validated temporal-quality/ground-truth benchmark.",
+    "Simple cut detector; may miss cuts or reset on fast motion.",
+    "8-bit SDR video path; no HDR color-managed processing.",
+    "Small frame dimensions may fall below NVENC hardware encoder limits; use the portable software encoder in that case."
+  ]
+}
