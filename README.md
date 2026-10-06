@@ -59,11 +59,7 @@ Get the **[weights, ONNX models and T4 engines from the release](https://github.
 | --- | --- |
 | `Tmosr2_2x.safetensors` | Original EMA checkpoint for the PyTorch architecture. |
 | `Tmosr2_2x_recurrent.onnx` | Seven-input recurrent model. |
-| `Tmosr2_2x_seed.onnx` | Spatial bootstrap used to initialize recurrent memory. |
 | `Tmosr2_2x_*_T4.engine` | Prebuilt FP16 engines for T4 + TensorRT 11.0.0.114. |
-| `SHA256SUMS.txt` | Checksums for the release files. |
-
-The Colab notebook downloads what it needs automatically and was tested on a T4. For other hardware, use the PyTorch version below.
 
 <details>
 <summary><strong>🔬 How the temporal architecture works</strong></summary>
