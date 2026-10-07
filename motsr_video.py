@@ -1,4 +1,4 @@
-"""Recurrent Tmosr2 inference. The same runner is used by Colab and the CLI.
+"""Recurrent MoTSR inference. The same runner is used by Colab and the CLI.
 
 Copyright (c) 2026 xyether. MIT; upstream notices are in NOTICE.
 """
@@ -29,9 +29,9 @@ class TorchBackend:
     """Portable reference backend; uses the released safetensors checkpoint."""
     def __init__(self, checkpoint, device=None):
         from safetensors.torch import load_file
-        from tmosr2_arch import Tmosr2
+        from motsr_arch import MoTSR
         self.device = torch.device(device or ("cuda" if torch.cuda.is_available() else "cpu"))
-        self.model = Tmosr2(stage="partial").eval().to(self.device)
+        self.model = MoTSR(stage="partial").eval().to(self.device)
         self.model.load_state_dict(load_file(str(checkpoint)), strict=True)
 
     @torch.inference_mode()
@@ -103,8 +103,8 @@ class TRTBackend:
             raise RuntimeError("Rerun the setup cell to install TensorRT 11.0.0.114.")
         self.device = torch.device("cuda")
         root = Path(model_dir)
-        self.seed_engine = TRTEngine(root / "Tmosr2_2x_seed_T4.engine", height, width)
-        self.step_engine = TRTEngine(root / "Tmosr2_2x_recurrent_T4.engine", height, width)
+        self.seed_engine = TRTEngine(root / "MoTSR_2x_seed_T4.engine", height, width)
+        self.step_engine = TRTEngine(root / "MoTSR_2x_recurrent_T4.engine", height, width)
         if len(self.step_engine.inputs) != 7:
             raise RuntimeError("The recurrent engine must have seven inputs.")
 
@@ -160,8 +160,10 @@ def video_timing(path):
 
 
 def upscale_video(input_path, output_path, model_dir="models", backend="trt", checkpoint=None,
-                  speed_boost=True, force_1080p=False, codec="hevc_nvenc", quality=15,
+                  speed_boost=True, force_1080p=False, codec="hevc_nvenc", quality=6,
                   reset_on_cuts=True, keep_frames=None, progress=True):
+    if not 0 <= quality <= 10:
+        raise ValueError("CRF / quality must be between 0 and 10.")
     source, output = Path(input_path).resolve(), Path(output_path).resolve()
     if source == output:
         raise ValueError("Choose a different output filename.")
@@ -171,7 +173,7 @@ def upscale_video(input_path, output_path, model_dir="models", backend="trt", ch
     stream, timestamps, durations = video_timing(source)
     width, height = dimensions(int(stream["width"]), int(stream["height"]), speed_boost)
     started = time.monotonic()
-    with tempfile.TemporaryDirectory(prefix="tmosr2-") as temp:
+    with tempfile.TemporaryDirectory(prefix="motsr-") as temp:
         root = Path(temp); inputs = root / "input"; results = root / "output"
         inputs.mkdir(); results.mkdir()
         # No fps filter: decode one image per original frame.
@@ -188,8 +190,8 @@ def upscale_video(input_path, output_path, model_dir="models", backend="trt", ch
                 cuts.append(i)
             previous = thumbnail
         cuts.append(n)
-        runner = TRTBackend(model_dir, height + height % 2, width + width % 2) if backend == "trt" else TorchBackend(checkpoint or Path(model_dir) / "Tmosr2_2x.safetensors")
-        bar = tqdm(total=n, desc="✨ Tmosr2", disable=not progress)
+        runner = TRTBackend(model_dir, height + height % 2, width + width % 2) if backend == "trt" else TorchBackend(checkpoint or Path(model_dir) / "MoTSR_2x.safetensors")
+        bar = tqdm(total=n, desc="✨ MoTSR", disable=not progress)
         with torch.inference_mode():
             for left, right in zip(cuts, cuts[1:]):
                 cache = {}

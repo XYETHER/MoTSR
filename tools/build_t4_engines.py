@@ -44,7 +44,7 @@ def main():
     if trt.__version__ != "11.0.0.114":
         raise RuntimeError("Release engines require TensorRT 11.0.0.114.")
     for name in ("seed", "recurrent"):
-        build(args.model_dir / f"Tmosr2_2x_{name}.onnx", args.model_dir / f"Tmosr2_2x_{name}_T4.engine")
+        build(args.model_dir / f"MoTSR_2x_{name}.onnx", args.model_dir / f"MoTSR_2x_{name}_T4.engine")
 
 
 if __name__ == "__main__":

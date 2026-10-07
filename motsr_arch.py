@@ -1,9 +1,9 @@
-"""Tmosr2: 2x recurrent real-life video super-resolution.
+"""MoTSR: 2x recurrent real-life video super-resolution.
 
 Temporal extensions and model weights: xyether, 2026, MIT.
 MoSRv2 spatial backbone: umzi2, MIT (see licenses/MoSRv2-MIT.txt).
 Adapted from the supplied traiNNer-redux checkout; retain its Apache-2.0 notice.
-The public name is Tmosr2; checkpoint parameter names are unchanged.
+The public name is MoTSR; checkpoint parameter names are unchanged.
 """
 from collections.abc import Mapping
 from typing import Any
@@ -239,7 +239,7 @@ class MoSRv2(nn.Module):
         return x[:, :, : h * self.scale, : w * self.scale]
 
 
-"""Checkpoint-preserving, centered-window MoSRV2. Independent of legacy TMoSR models."""
+"""Checkpoint-preserving, centered-window MoSRV2. Independent of legacy MoTSR models."""
 
 from typing import Any
 
@@ -486,7 +486,7 @@ class _RecurrentBase(_TemporalBase):
         return out[:, :, : h * 2, : w * 2]
 
 
-"""Tmosr2: five LR frames and two recurrent HR feedback frames.
+"""MoTSR: five LR frames and two recurrent HR feedback frames.
 
 Inputs at t: LR[t-2], SR[t-2], LR[t-1], SR[t-1], LR[t], LR[t+1], LR[t+2].
 The new outer temporal positions and older-HR feedback start at zero so a
@@ -500,7 +500,7 @@ from torch import Tensor, nn
 
 
 
-class Tmosr2(_RecurrentBase):
+class MoTSR(_RecurrentBase):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         temporal_dim = self.temporal.compress.out_channels

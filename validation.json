@@ -141,23 +141,23 @@
     "audio_codec": "aac"
   },
   "assets": {
-    "Tmosr2_2x.safetensors": {
+    "MoTSR_2x.safetensors": {
       "size": 16871999,
       "sha256": "1d838c7f8111560aa34e8582075cd5f82840e7bd4e7a9bddf7a1bcf3f2b7d4fd"
     },
-    "Tmosr2_2x_seed.onnx": {
+    "MoTSR_2x_seed.onnx": {
       "size": 16885477,
       "sha256": "26ecfa9bf05477b0f2e4629ad9670f1554d272ad18ff41d3a5eefdcb24aa64eb"
     },
-    "Tmosr2_2x_recurrent.onnx": {
+    "MoTSR_2x_recurrent.onnx": {
       "size": 17006297,
       "sha256": "343f8de449d23a4de6eb1e72cfdc84ac6cc29ef28debfcc9f2a68177856c107d"
     },
-    "Tmosr2_2x_seed_T4.engine": {
+    "MoTSR_2x_seed_T4.engine": {
       "size": 19459660,
       "sha256": "e8af6ee5c9f7b2cce8dbee71efdb3fc5d4700cb6129cae83b5897a938e788e84"
     },
-    "Tmosr2_2x_recurrent_T4.engine": {
+    "MoTSR_2x_recurrent_T4.engine": {
       "size": 21190684,
       "sha256": "43b13065ec01a94e2397f255e44bb46e78002429bd9d12d81393a124555df74b"
     }
@@ -173,9 +173,9 @@
   "public_colab_notebook_test": {
     "exact_notebook_cells": "pass",
     "public_release_downloads": [
-      "https://github.com/XYETHER/Tmosr2/releases/download/v1.0.0/Tmosr2_2x_seed_T4.engine",
-      "https://github.com/XYETHER/Tmosr2/releases/download/v1.0.0/Tmosr2_2x_recurrent_T4.engine",
-      "https://github.com/XYETHER/Tmosr2/releases/download/v1.0.0/tmosr2_video.py"
+      "https://github.com/XYETHER/MoTSR/releases/download/v1.0.0/MoTSR_2x_seed_T4.engine",
+      "https://github.com/XYETHER/MoTSR/releases/download/v1.0.0/MoTSR_2x_recurrent_T4.engine",
+      "https://github.com/XYETHER/MoTSR/releases/download/v1.0.0/motsr_video.py"
     ],
     "checksum_verification": "pass",
     "repeat_setup_cached": "pass",
