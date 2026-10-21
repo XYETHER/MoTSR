@@ -54,7 +54,7 @@ class TRTEngine:
         self.runtime = trt.Runtime(self.logger)
         self.engine = self.runtime.deserialize_cuda_engine(Path(path).read_bytes())
         if self.engine is None:
-            raise RuntimeError("Cannot load the release engine. Select a T4 GPU and rerun setup with TensorRT 11.0.0.114.")
+            raise RuntimeError("Cannot load the release engine. Select a T4 GPU and rerun setup with TensorRT 10.16.1.11.")
         self.context = self.engine.create_execution_context()
         self.names = [self.engine.get_tensor_name(i) for i in range(self.engine.num_io_tensors)]
         self.inputs = [n for n in self.names if self.engine.get_tensor_mode(n) == trt.TensorIOMode.INPUT]
@@ -99,12 +99,12 @@ class TRTBackend:
         import tensorrt as trt
         if not torch.cuda.is_available() or torch.cuda.get_device_capability() != (7, 5):
             raise RuntimeError("Choose Runtime → Change runtime type → T4 GPU, then rerun setup.")
-        if trt.__version__ != "11.0.0.114":
-            raise RuntimeError("Rerun the setup cell to install TensorRT 11.0.0.114.")
+        if trt.__version__ != "10.16.1.11":
+            raise RuntimeError("Rerun the upscaling cell to install TensorRT 10.16.1.11.")
         self.device = torch.device("cuda")
         root = Path(model_dir)
-        self.seed_engine = TRTEngine(root / "MoTSR_2x_seed_T4.engine", height, width)
-        self.step_engine = TRTEngine(root / "MoTSR_2x_recurrent_T4.engine", height, width)
+        self.seed_engine = TRTEngine(root / "MoTSR_2x_seed_T4_TRT10.16.1.11.engine", height, width)
+        self.step_engine = TRTEngine(root / "MoTSR_2x_recurrent_T4_TRT10.16.1.11.engine", height, width)
         if len(self.step_engine.inputs) != 7:
             raise RuntimeError("The recurrent engine must have seven inputs.")
 

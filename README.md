@@ -35,7 +35,7 @@ I trained MoTSR using **[traiNNer-redux](https://github.com/the-database/traiNNe
 
 1. Open the **[Colab notebook](https://colab.research.google.com/github/XYETHER/MoTSR/blob/main/MoTSR.ipynb)**.
 2. Select **Runtime → Change runtime type → T4 GPU**.
-3. Run **✨ Setup Environment**, then **🚀 Upscale**.
+3. Run the single **🚀 Upscale** cell; setup is included.
 4. Upload your video and download the result.
 
 ### 🎛️ What do the settings mean?
@@ -53,13 +53,13 @@ I trained MoTSR using **[traiNNer-redux](https://github.com/the-database/traiNNe
 
 ## 📦 Model downloads
 
-Get the **[weights, ONNX models and T4 engines from the release](https://github.com/XYETHER/MoTSR/releases/tag/v1.0.0)**.
+Get the **[weights and ONNX models](https://github.com/XYETHER/MoTSR/releases/tag/v1.0.0)** and the **[TensorRT 10.16.1.11 FP16 T4 engines](https://github.com/XYETHER/MoTSR/releases/tag/v1.1.0)**. The combined Colab cell reuses an existing matching TensorRT installation and installs dependencies only when needed.
 
 | File | For |
 | --- | --- |
 | `MoTSR_2x.safetensors` | Original EMA checkpoint for the PyTorch architecture. |
 | `MoTSR_2x_recurrent.onnx` | Seven-input recurrent model. |
-| `MoTSR_2x_*_T4.engine` | Prebuilt FP16 engines for T4 + TensorRT 11.0.0.114. |
+| `MoTSR_2x_*_T4_TRT10.16.1.11.engine` | Prebuilt FP16 engines for T4 + TensorRT 10.16.1.11. |
 
 <details>
 <summary><strong>🔬 How the temporal architecture works</strong></summary>
@@ -122,15 +122,15 @@ pip install onnx
 python tools/export_onnx.py models/MoTSR_2x.safetensors --output-dir models
 ```
 
-Rebuild the T4 engines offline on a T4 with TensorRT 11.0.0.114:
+Rebuild the T4 engines offline on a T4 with TensorRT 10.16.1.11:
 
 ```bash
-pip install tensorrt==11.0.0.114 onnx onnxconverter-common
+pip install tensorrt==10.16.1.11 onnx onnxconverter-common
 python tools/build_t4_engines.py --model-dir models
 python motsr_video.py input.mp4 output.mp4 --backend trt
 ```
 
-Test results and runtime details are in [validation.json](validation.json).
+TensorRT 10.16.1.11 test results are in [validation-trt10.json](validation-trt10.json). Earlier TensorRT 11 results remain in [validation.json](validation.json).
 
 </details>
 

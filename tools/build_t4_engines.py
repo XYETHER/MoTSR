@@ -41,10 +41,10 @@ def main():
     args = parser.parse_args()
     if not torch.cuda.is_available() or torch.cuda.get_device_capability() != (7, 5):
         raise RuntimeError("Build the release engines on a T4 GPU.")
-    if trt.__version__ != "11.0.0.114":
-        raise RuntimeError("Release engines require TensorRT 11.0.0.114.")
+    if trt.__version__ != "10.16.1.11":
+        raise RuntimeError("Release engines require TensorRT 10.16.1.11.")
     for name in ("seed", "recurrent"):
-        build(args.model_dir / f"MoTSR_2x_{name}.onnx", args.model_dir / f"MoTSR_2x_{name}_T4.engine")
+        build(args.model_dir / f"MoTSR_2x_{name}.onnx", args.model_dir / f"MoTSR_2x_{name}_T4_TRT10.16.1.11.engine")
 
 
 if __name__ == "__main__":
