@@ -130,7 +130,7 @@ python tools/build_t4_engines.py --model-dir models
 python motsr_video.py input.mp4 output.mp4 --backend trt
 ```
 
-TensorRT 10.16.1.11 test results are in [validation-trt10.json](validation-trt10.json). Earlier TensorRT 11 results remain in [validation.json](validation.json).
+Earlier TensorRT 11 test results remain in [validation.json](validation.json).
 
 </details>
 
