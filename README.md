@@ -53,7 +53,7 @@ I trained MoTSR using **[traiNNer-redux](https://github.com/the-database/traiNNe
 
 ## 📦 Model downloads
 
-Get the **[weights and ONNX models](https://github.com/XYETHER/MoTSR/releases/tag/v1.0.0)** and the **[TensorRT 10.16.1.11 FP16 T4 engines](https://github.com/XYETHER/MoTSR/releases/tag/v1.1.0)**. The combined Colab cell reuses an existing matching TensorRT installation and installs dependencies only when needed.
+Get the **[weights and ONNX models](https://github.com/XYETHER/MoTSR/releases/tag/v1.0.0)** and the **[TensorRT 10.16.1.11 FP16 T4 engines](https://github.com/XYETHER/MoTSR/releases/tag/v1.1.0)**.
 
 | File | For |
 | --- | --- |
