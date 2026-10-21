@@ -208,6 +208,68 @@
       }
     ]
   },
+  "public_release_test": {
+    "exact_combined_cell": true,
+    "public_release_downloads": true,
+    "checksum_verification": true,
+    "tests": [
+      {
+        "kind": "landscape",
+        "codec": "h264_nvenc",
+        "total_seconds": 8.225196742999742,
+        "report": {
+          "input_frames": 7,
+          "output_frames": 7,
+          "input_size": [
+            320,
+            256
+          ],
+          "model_input_size": [
+            320,
+            256
+          ],
+          "output_size": [
+            640,
+            512
+          ],
+          "duration_seconds": 0.27999999999999997,
+          "max_timestamp_error_seconds": 0.0,
+          "scene_resets": 1,
+          "codec": "h264_nvenc",
+          "seconds": 2.816,
+          "backend": "trt"
+        },
+        "cached_run_seconds": 5.733336508999855
+      },
+      {
+        "kind": "portrait",
+        "codec": "hevc_nvenc",
+        "total_seconds": 10.433559835999858,
+        "report": {
+          "input_frames": 6,
+          "output_frames": 6,
+          "input_size": [
+            257,
+            321
+          ],
+          "model_input_size": [
+            257,
+            321
+          ],
+          "output_size": [
+            514,
+            642
+          ],
+          "duration_seconds": 1.0,
+          "max_timestamp_error_seconds": 0.0,
+          "scene_resets": 2,
+          "codec": "hevc_nvenc",
+          "seconds": 3.703,
+          "backend": "trt"
+        }
+      }
+    ]
+  },
   "limitations": [
     "The matching TensorRT version was already installed in the supplied runtime; a fresh-Colab installation time was not measured.",
     "Numerical and short media smoke tests are not a visual-quality benchmark.",
